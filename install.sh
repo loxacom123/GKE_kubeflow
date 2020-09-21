@@ -70,6 +70,11 @@ export BASE_DIR=$(pwd)/kubeflow_project
 # 此次部署Kubeflow的的完整路徑
 export KF_DIR=${BASE_DIR}/${KF_NAME}
 
+echo "********** Download kfctl **********"
+
+wget https://github.com/kubeflow/kfctl/releases/download/v1.1.0/kfctl_v1.1.0-0-g9a3621e_linux.tar.gz
+tar -xvf kfctl_v1.1.0-0-g9a3621e_linux.tar.gz
+
 echo "********** Setup Kubeflow **********"
 
 # 來到Kubeflow專案底下
