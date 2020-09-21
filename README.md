@@ -1,5 +1,5 @@
 # GKE_kubeflow
-自動安裝kubeflow
+在Google kubernetes Engine自動安裝kubeflow
 
 ## 使用教學
 #### 移動到家目錄
