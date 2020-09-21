@@ -13,5 +13,6 @@ git clone https://github.com/loxacom123/GKE_kubeflow.git
 #### 執行腳本
 ``` Bash
 cd GKE_kubeflow
-./install.sh
+chmod +x install.sh
+./install.sh -i <Your GCP Project ID>
 ```
