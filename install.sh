@@ -1,10 +1,59 @@
+# 預設參數
+gcp_sa="gcp-sa"
+k8s_sa="k8s-sa"
+kf_name="my-kubeflow"
+
+
+#參數讀取
+while [ "$1" != "" ]; do
+    case $1 in
+        -i | --id ) shift;  # ProjectID
+          project_id=$1 ;;
+        -g | --gsa ) shift; # GSA Name
+          gcp_sa=$1 ;;
+        -k | --ksa ) shift; # KSA Name
+          k8s_sa=$1 ;;
+        -f | --kf ) shift; # Kubeflow 資料夾
+          kf_name=$1 ;;
+    esac
+    shift;
+done
+
+#沒有填Projecit ID 結束
+if [ "$project_id" = "" ]; then
+  exit;
+fi
+
+echo "********** Preview Parameters **********"
+echo "Project ID : ${project_id}"
+echo "GSA Name : ${gcp_sa}"
+echo "KSA Name : ${k8s_sa}"
+echo "Kubeflow folder : ${kf_name}"
+echo ""
+echo ""
+
+read -r -p "Are you sure? [y/N] " response
+case "$response" in
+    [yY][eE][sS]|[yY]) 
+        echo "OK"
+        ;;
+    *)
+        echo "Bye"
+        exit
+        ;;
+esac
+
+
+echo "********** Setup Parameters **********"
+
+## 環境參數 ##
 # 專案ID
-export PROJECT=rich-tribute-289002
-export PROJECT_ID=rich-tribute-289002
+export PROJECT=$project_id
+export PROJECT_ID=$project_id
 
 # 名稱
-export GSA_NAME=gcp-sa
-export KSA_NAME=k8s-sa
+export GSA_NAME=$gcp_sa
+export KSA_NAME=$k8s_sa
 
 # 以利後需使用kfctl指令
 export PATH=$PATH:$(pwd)
@@ -20,6 +69,8 @@ export BASE_DIR=$(pwd)/kubeflow_project
 
 # 此次部署Kubeflow的的完整路徑
 export KF_DIR=${BASE_DIR}/${KF_NAME}
+
+echo "********** Setup Kubeflow **********"
 
 # 來到Kubeflow專案底下
 mkdir -p ${KF_DIR}
@@ -45,3 +96,6 @@ kubectl annotate serviceaccount \
   --namespace kubeflow \
   ${KSA_NAME} \
   iam.gke.io/gcp-service-account=${GSA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com
+  
+  
+echo "********** Setup Complete **********"
