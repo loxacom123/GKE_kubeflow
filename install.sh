@@ -21,6 +21,7 @@ done
 
 #沒有填Projecit ID 結束
 if [ "$project_id" = "" ]; then
+  echo "Please enter your project id!!"
   exit;
 fi
 
