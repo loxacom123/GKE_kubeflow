@@ -72,6 +72,8 @@ export KF_DIR=${BASE_DIR}/${KF_NAME}
 
 echo "********** Setup Kubeflow **********"
 
+gcloud components install kubectl
+
 # 來到Kubeflow專案底下
 mkdir -p ${KF_DIR}
 cd ${KF_DIR}
